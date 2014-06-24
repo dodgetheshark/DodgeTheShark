@@ -2,13 +2,11 @@ package com.luka.dodgetheshark;
 
 import android.content.Intent;
 import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.luka.dodgetheshark.assets.Assets;
+import com.luka.dodgetheshark.assets.Data;
 import com.luka.dodgetheshark.ui.Button;
 
 /**
@@ -30,15 +28,15 @@ public class HomePageActivity extends AbstractActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        x = width/2 - Assets.header.getWidth()/2;
-        y = height/3 - Assets.header.getHeight()/3;
-        play = new Button(x, (height/3)*2, Assets.play);
-        scores = new Button((x+Assets.header.getWidth()-Assets.scores.getWidth()),(height/3)*2, Assets.scores);
+        x = width/2 - Data.Assets.header.getWidth()/2;
+        y = height/3 - Data.Assets.header.getHeight()/3;
+        play = new Button(x, (height/3)*2, Data.Assets.play);
+        scores = new Button((x+Data.Assets.header.getWidth()-Data.Assets.scores.getWidth()),(height/3)*2, Data.Assets.scores);
     }
 
     @Override
     public Canvas draw(Canvas canvas) {
-        canvas.drawBitmap(Assets.header,x,y ,null);
+        canvas.drawBitmap(Data.Assets.header,x,y ,null);
         canvas = play.draw(canvas);
         canvas = scores.draw(canvas);
         return canvas;

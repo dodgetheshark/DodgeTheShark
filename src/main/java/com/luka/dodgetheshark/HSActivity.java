@@ -7,12 +7,10 @@ import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.luka.dodgetheshark.assets.Assets;
-import com.luka.dodgetheshark.assets.Statics;
+import com.luka.dodgetheshark.assets.Data;
 import com.luka.dodgetheshark.ui.Button;
 
 /**
@@ -40,18 +38,18 @@ public class HSActivity extends AbstractActivity {
         this.preferences = getSharedPreferences(MyPREFERENCES, Context.MODE_PRIVATE);
         createPrefs();
         this.highscores = getHighscores();
-        updateHighScores(Statics.score);
-        this.highscore = Assets.highscore;
+        updateHighScores(Data.score);
+        this.highscore = Data.Assets.highscore;
         this.x = (width/2-(highscore.getWidth()/2));
         this.y = (height/2-(highscore.getHeight()/2));
-        this.play = new Button(x , (y+highscore.getHeight()+20), Assets.play);
-        this.back = new Button((x+Assets.highscore.getWidth()-Assets.back.getWidth()) , (y+highscore.getHeight()+20), Assets.back);
+        this.play = new Button(x , (y+highscore.getHeight()+20), Data.Assets.play);
+        this.back = new Button((x+Data.Assets.highscore.getWidth()-Data.Assets.back.getWidth()) , (y+highscore.getHeight()+20), Data.Assets.back);
         Rect bounds = new Rect();
-        Assets.textPaint.getTextBounds(highText,0,highText.length(),bounds);
-        this.hy = y+ bounds.height() + 50 ;
-        this.halfH = highscore.getWidth()/2;
-        this.hx = (int) ( x + halfH - Assets.textPaint.measureText(highText)/2);
-        this.fy = y+50;
+        Data.Assets.textPaint.getTextBounds(highText,0,highText.length(),bounds);
+  //      this.hy = y+ bounds.height() + 50 ;
+     //   this.halfH = highscore.getWidth()/2;
+    //    this.hx = (int) ( x + halfH - Data.Assets.textPaint.measureText(highText)/2);
+   //     this.fy = y+50;
 
 
     }
@@ -104,10 +102,10 @@ public class HSActivity extends AbstractActivity {
 
     @Override
     public Canvas draw(Canvas canvas) {
-        canvas.drawBitmap(highscore,x,y,null);
-     //   canvas.drawText("HighScores",hx , fy ,Assets.textPaint);
-     /*   for(int i = 0 ; i <3 ;i++) {
-            canvas.drawText((i+1) + ") " + String.valueOf(highscores[i]), x+20,hy+(i*80),Assets.textPaint);
+        canvas.drawBitmap(highscore, Data.Calculations.highscoreX, Data.Calculations.highscoreY,null);
+     //   canvas.drawText("HighScores",hx , fy ,Data.Assets.textPaint);
+      /*  for(int i = 0 ; i <3 ;i++) {
+            canvas.drawText((i+1) + ") " + String.valueOf(highscores[i]), x+20,hy+(i*80),Data.Assets.textPaint);
         }*/
         canvas = play.draw(canvas);
         canvas = back.draw(canvas);

@@ -2,11 +2,10 @@ package com.luka.dodgetheshark.ui;
 
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.media.AudioManager;
 import android.media.SoundPool;
 
-import com.luka.dodgetheshark.assets.Assets;
+import com.luka.dodgetheshark.assets.Data;
 
 /**
  * Created by Luka on 19/06/14.
@@ -24,7 +23,7 @@ public class Button {
         this.y = y;
         this.image = image;
         this.pool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
-        this.click =this.pool.load(Assets.click , 1);
+        this.click =this.pool.load(Data.Assets.click , 1);
     }
 
     public Canvas draw(Canvas canvas) {
@@ -33,8 +32,12 @@ public class Button {
     }
 
     public boolean clicked(int mx, int my) {
-        pool.play(click,1.0f, 1.0f, 0, 0, 1);
-        return x-mx <= 0 && x-mx >= image.getWidth()*-1 && y-my <= 0 && y-my >= image.getHeight()*-1;
+        if(x-mx <= 0 && x-mx >= image.getWidth()*-1 && y-my <= 0 && y-my >= image.getHeight()*-1) {
+            pool.play(click,1.0f, 1.0f, 0, 0, 1);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

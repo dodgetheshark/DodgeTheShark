@@ -1,9 +1,6 @@
 package com.luka.dodgetheshark.game;
 
-import android.support.v7.appcompat.R;
-
-import com.luka.dodgetheshark.GameActivity;
-import com.luka.dodgetheshark.assets.Assets;
+import com.luka.dodgetheshark.assets.Data;
 
 /**
  * Created by Luka on 18/06/14.
@@ -17,7 +14,7 @@ public class PlayerFish extends Fish {
 
     public PlayerFish(int x, int y) {
         super(x, y);
-        image = Assets.fish;
+        image = Data.Assets.fish;
         this.velocity = 0;
         this.accept = true;
     }
@@ -33,9 +30,7 @@ public class PlayerFish extends Fish {
                 if(velocity == 0) {
                     accept = true;
                 }
-            } else if(accept && velocity == 0) {
-                velocity = decrease;
-            } else  {
+            } else {
                 y += velocity;
                 velocity++;
             }

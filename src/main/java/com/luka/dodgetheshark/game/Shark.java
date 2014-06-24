@@ -1,7 +1,6 @@
 package com.luka.dodgetheshark.game;
 
-import com.luka.dodgetheshark.GameActivity;
-import com.luka.dodgetheshark.assets.Statics;
+import com.luka.dodgetheshark.assets.Data;
 
 import java.util.Random;
 
@@ -23,7 +22,6 @@ public class Shark extends Fish {
         random = new Random();
         velocity = random.nextInt(20)+20;
         this.invalid = false;
-
     }
 
     public void move() {
@@ -35,7 +33,7 @@ public class Shark extends Fish {
     }
 
     private void restart() {
-        Statics.score++;
+        Data.score++;
         x = orginialX;
         y =  random.nextInt(height);
         if(y <= 15) {
