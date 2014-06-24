@@ -33,8 +33,22 @@ public class Data {
     public static class Calculations {
         public static int highscoreX;
         public static int highscoreY;
+        public static int highscoreHalfX;
+        public static int highscoreHalfY;
+        public static int highscoreHalfH;
+        public static int highscoreFy;
+        public static int highscoreXtwenty;
+        public static int readyX;
+        public static int readyY;
+        public static int headerX;
+        public static int headerY;
+
     }
 
+    public static class Constants {
+        public static final String highscore = "Highscore";
+        public static final String score = "Score";
+    }
 
 
 }

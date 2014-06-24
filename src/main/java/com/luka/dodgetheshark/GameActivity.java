@@ -91,7 +91,7 @@ public class GameActivity extends AbstractActivity implements Runnable {
         for(Shark shar : sharks) {
             int fishx = fish.x;
             int fishy = fish.y;
-            if ((fishx - shar.x >= -25 && fishx-shar.x <= 25)  && (fishy - shar.y <= 20 && fish.y - shar.y >= -30)) {
+            if ((fishx - shar.x >= -25 && fishx-shar.x <= 25)  && (fishy - shar.y <= 30 && fish.y - shar.y >= -10)) {
                 return true;
             }
         }
@@ -100,7 +100,7 @@ public class GameActivity extends AbstractActivity implements Runnable {
 
     private boolean shouldSpawn() {
         int score = Data.score;
-        return random.nextInt(14000) < score*5;
+        return random.nextInt(10000) < score*10;
     }
 
     @Override

@@ -6,6 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Bundle;
 import android.view.MotionEvent;
@@ -72,5 +73,17 @@ public class MainActivity extends AbstractActivity  {
     private void setCalculations() {
         Data.Calculations.highscoreX = (width/2-(Data.Assets.highscore.getWidth()/2));
         Data.Calculations.highscoreY = (height/2-(Data.Assets.highscore.getHeight()/2));
+        Data.Calculations.readyX = (width/2) - (Data.Assets.ready.getWidth()/2);
+        Data.Calculations.readyY = (height/2) - (Data.Assets.ready.getHeight()/2);
+        Data.Calculations.headerX = width/2 - Data.Assets.header.getWidth()/2;
+        Data.Calculations.headerY = height/3 - Data.Assets.header.getHeight()/3;
+
+        Rect bounds = new Rect();
+        Data.Assets.textPaint.getTextBounds(Data.Constants.highscore,0, Data.Constants.highscore.length(),bounds);
+        Data.Calculations.highscoreHalfY = Data.Calculations.highscoreY+ bounds.height() + 50 ;
+        Data.Calculations.highscoreHalfH = Data.Assets.highscore.getWidth()/2;
+        Data.Calculations.highscoreHalfX = (int) (Data.Calculations.highscoreX  + Data.Calculations.highscoreHalfH - Data.Assets.textPaint.measureText(Data.Constants.highscore)/2);
+        Data.Calculations.highscoreFy = Data.Calculations.highscoreY + 50;
+        Data.Calculations.highscoreXtwenty = Data.Calculations.highscoreX + 20;
     }
 }

@@ -24,13 +24,7 @@ public class HSActivity extends AbstractActivity {
     private Bitmap highscore;
     private Button play;
     private Button back;
-    private int x;
-    private int hx;
-    private int hy;
-    private int fy;
-    private int halfH;
-    private int y;
-    private final String highText = "Highscores";
+    private String[] scoresAsStrings;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,17 +34,15 @@ public class HSActivity extends AbstractActivity {
         this.highscores = getHighscores();
         updateHighScores(Data.score);
         this.highscore = Data.Assets.highscore;
-        this.x = (width/2-(highscore.getWidth()/2));
-        this.y = (height/2-(highscore.getHeight()/2));
-        this.play = new Button(x , (y+highscore.getHeight()+20), Data.Assets.play);
-        this.back = new Button((x+Data.Assets.highscore.getWidth()-Data.Assets.back.getWidth()) , (y+highscore.getHeight()+20), Data.Assets.back);
-        Rect bounds = new Rect();
+        this.play = new Button(Data.Calculations.highscoreX , (Data.Calculations.highscoreY + highscore.getHeight()+20), Data.Assets.play);
+        this.back = new Button((Data.Calculations.highscoreX +Data.Assets.highscore.getWidth()-Data.Assets.back.getWidth()) , (Data.Calculations.highscoreY + highscore.getHeight()+20), Data.Assets.back);
+      /*  Rect bounds = new Rect();
         Data.Assets.textPaint.getTextBounds(highText,0,highText.length(),bounds);
-  //      this.hy = y+ bounds.height() + 50 ;
-     //   this.halfH = highscore.getWidth()/2;
-    //    this.hx = (int) ( x + halfH - Data.Assets.textPaint.measureText(highText)/2);
-   //     this.fy = y+50;
-
+        this.hy = y+ bounds.height() + 50 ;
+        this.halfH = highscore.getWidth()/2;
+        this.hx = (int) (Data.Calculations.highscoreX  + halfH - Data.Assets.textPaint.measureText(highText)/2);
+        this.fy = y+50;*/
+        setScores();
 
     }
 
@@ -90,6 +82,15 @@ public class HSActivity extends AbstractActivity {
         writeHighScores();
     }
 
+    private void setScores() {
+        scoresAsStrings = new String[3];
+        StringBuilder builder = new StringBuilder();
+        for(int i = 0 ; i < 3 ; i++) {
+            scoresAsStrings[i] = builder.append(i+1).append(") ").append(highscores[i]).toString();
+            builder.setLength(0);
+        }
+    }
+
     private void writeHighScores() {
         StringBuilder builder = new StringBuilder();
         SharedPreferences.Editor editor = preferences.edit();
@@ -102,11 +103,11 @@ public class HSActivity extends AbstractActivity {
 
     @Override
     public Canvas draw(Canvas canvas) {
-        canvas.drawBitmap(highscore, Data.Calculations.highscoreX, Data.Calculations.highscoreY,null);
-     //   canvas.drawText("HighScores",hx , fy ,Data.Assets.textPaint);
-      /*  for(int i = 0 ; i <3 ;i++) {
-            canvas.drawText((i+1) + ") " + String.valueOf(highscores[i]), x+20,hy+(i*80),Data.Assets.textPaint);
-        }*/
+        canvas.drawBitmap(highscore, Data.Calculations.highscoreX, Data.Calculations.highscoreY, null);
+       canvas.drawText(Data.Constants.highscore,Data.Calculations.highscoreHalfX , Data.Calculations.highscoreFy ,Data.Assets.textPaint);
+        for(int i = 0 ; i <3 ;i++) {
+            canvas.drawText(scoresAsStrings[i], Data.Calculations.highscoreXtwenty ,Data.Calculations.highscoreHalfY+(i*80),Data.Assets.textPaint);
+        }
         canvas = play.draw(canvas);
         canvas = back.draw(canvas);
         return canvas;
