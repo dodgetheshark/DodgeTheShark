@@ -4,12 +4,15 @@ import android.content.res.AssetFileDescriptor;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 
+import com.luka.dodgetheshark.game.SoundController;
+
 /**
  * Created by Luka on 24/06/14.
  */
 public class Data {
 
     public static int score;
+    public static SoundController controller;
 
     public static class Assets {
         public static Bitmap back;
@@ -28,6 +31,8 @@ public class Data {
         public static Paint textPaint;
         public static AssetFileDescriptor click;
         public static AssetFileDescriptor pop;
+        public static AssetFileDescriptor lwoo;
+        public static AssetFileDescriptor hwoo;
     }
 
     public static class Calculations {
@@ -38,8 +43,11 @@ public class Data {
         public static int highscoreHalfH;
         public static int highscoreFy;
         public static int highscoreXtwenty;
+        public static int highScoreNewX;
+        public static int highscoreHalfYEighty;
         public static int readyX;
         public static int readyY;
+        public static int widthFifty;
         public static int headerX;
         public static int headerY;
 
@@ -47,7 +55,7 @@ public class Data {
 
     public static class Constants {
         public static final String highscore = "Highscore";
-        public static final String score = "Score";
+        public static final String score = "Score ";
     }
 
 

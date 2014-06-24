@@ -25,6 +25,7 @@ public class HSActivity extends AbstractActivity {
     private Button play;
     private Button back;
     private String[] scoresAsStrings;
+    private String score;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +44,7 @@ public class HSActivity extends AbstractActivity {
         this.hx = (int) (Data.Calculations.highscoreX  + halfH - Data.Assets.textPaint.measureText(highText)/2);
         this.fy = y+50;*/
         setScores();
-
+        score = new StringBuilder().append(Data.Constants.score).append(Data.score).toString();
     }
 
     private void createPrefs() {
@@ -108,6 +109,7 @@ public class HSActivity extends AbstractActivity {
         for(int i = 0 ; i <3 ;i++) {
             canvas.drawText(scoresAsStrings[i], Data.Calculations.highscoreXtwenty ,Data.Calculations.highscoreHalfY+(i*80),Data.Assets.textPaint);
         }
+        canvas.drawText(score, Data.Calculations.highScoreNewX, Data.Calculations.highscoreHalfYEighty, Data.Assets.textPaint);
         canvas = play.draw(canvas);
         canvas = back.draw(canvas);
         return canvas;

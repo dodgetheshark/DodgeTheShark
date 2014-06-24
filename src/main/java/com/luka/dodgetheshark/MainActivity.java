@@ -13,6 +13,7 @@ import android.view.MotionEvent;
 import android.view.View;
 
 import com.luka.dodgetheshark.assets.Data;
+import com.luka.dodgetheshark.game.SoundController;
 
 import java.io.IOException;
 
@@ -58,11 +59,15 @@ public class MainActivity extends AbstractActivity  {
             Data.Assets.ready = BitmapFactory.decodeStream(manager.open("ready.png"));
             Data.Assets.pausedButton = BitmapFactory.decodeStream(manager.open("pause.png"));
             Data.Assets.pausedMemo = BitmapFactory.decodeStream(manager.open("gpaused.png"));
+
             Data.Assets.click = manager.openFd("click.ogg");
             Data.Assets.pop = manager.openFd("pop.ogg");
+            Data.Assets.lwoo = manager.openFd("lwoo.ogg");
+            Data.Assets.hwoo = manager.openFd("hwoo.ogg");
+
             Typeface typeface = Typeface.createFromAsset(getAssets(),"Harabara.ttf");
             Data.Assets.textPaint = new Paint();
-            Data.Assets.textPaint.setTextSize(32);
+            Data.Assets.textPaint.setTextSize(46);
             Data.Assets.textPaint.setColor(Color.BLUE);
             Data.Assets.textPaint.setTypeface(typeface);
         } catch (IOException e) {
@@ -71,6 +76,7 @@ public class MainActivity extends AbstractActivity  {
     }
 
     private void setCalculations() {
+        Data.controller = new SoundController();
         Data.Calculations.highscoreX = (width/2-(Data.Assets.highscore.getWidth()/2));
         Data.Calculations.highscoreY = (height/2-(Data.Assets.highscore.getHeight()/2));
         Data.Calculations.readyX = (width/2) - (Data.Assets.ready.getWidth()/2);
@@ -80,10 +86,13 @@ public class MainActivity extends AbstractActivity  {
 
         Rect bounds = new Rect();
         Data.Assets.textPaint.getTextBounds(Data.Constants.highscore,0, Data.Constants.highscore.length(),bounds);
-        Data.Calculations.highscoreHalfY = Data.Calculations.highscoreY+ bounds.height() + 50 ;
+        Data.Calculations.highscoreHalfY = Data.Calculations.highscoreY+ bounds.height() + 60 ;
         Data.Calculations.highscoreHalfH = Data.Assets.highscore.getWidth()/2;
         Data.Calculations.highscoreHalfX = (int) (Data.Calculations.highscoreX  + Data.Calculations.highscoreHalfH - Data.Assets.textPaint.measureText(Data.Constants.highscore)/2);
-        Data.Calculations.highscoreFy = Data.Calculations.highscoreY + 50;
+        Data.Calculations.highscoreFy = Data.Calculations.highscoreY + bounds.height() + 25;
         Data.Calculations.highscoreXtwenty = Data.Calculations.highscoreX + 20;
+        Data.Calculations.highScoreNewX = Data.Calculations.highscoreX + (Data.Assets.highscore.getWidth()/2);
+        Data.Calculations.highscoreHalfYEighty = Data.Calculations.highscoreHalfY + 80;
+        Data.Calculations.widthFifty = width-150;
     }
 }

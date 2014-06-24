@@ -27,40 +27,43 @@ public class GameActivity extends AbstractActivity implements Runnable {
     private Shark shark;
     public List<Shark> sharks;
     public Thread thread;
-    private SoundPool pool;
     private int pop;
     private int spikes;
-    private int x;
-    private int y;
-    private int hx;
-    private final String score = "Score";
     private boolean gameStarted;
     private Random random;
     private boolean paused;
     private Button pauseb;
-
+    private int previousScore;
+    private StringBuilder builder;
+    private String current;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        this.pool = new SoundPool(2, AudioManager.STREAM_MUSIC, 0);
         this.fish = new PlayerFish(50,50);
         this.spikes = (int) Math.ceil(width/20);
         this.random = new Random();
         this.shark = new Shark(width,50, height);
         this.sharks = new ArrayList<Shark>();
         this.sharks.add(shark);
-        this.x = (width/2) - (Data.Assets.ready.getWidth()/2);
-        this.y = (height/2) - (Data.Assets.ready.getHeight()/2);
         this.thread = new Thread(this);
         this.paused = false;
         this.pauseb = new Button(width-100,height-100, Data.Assets.pausedButton);
         Data.score = 0;
+        this.previousScore = 0;
+        this.builder = new StringBuilder();
+        this.current = getStringAsText();
     }
 
     @Override
     public Canvas draw(Canvas canvas) {
+        if(previousScore != Data.score) {
+            current = getStringAsText();
+            previousScore = Data.score;
+        }
+        canvas.drawText(current,Data.Calculations.widthFifty, 75 , Data.Assets.textPaint);
+
         for(int i = 0 ; i < spikes ; i++) {
             canvas.drawBitmap(Data.Assets.deathspike, i*20, 0, null);
             canvas.drawBitmap(Data.Assets.ideathspike, i*20, height-40, null);
@@ -72,15 +75,21 @@ public class GameActivity extends AbstractActivity implements Runnable {
         }
 
         if(!gameStarted) {
-            canvas.drawBitmap(Data.Assets.ready, x, y, null);
+            canvas.drawBitmap(Data.Assets.ready, Data.Calculations.readyX, Data.Calculations.readyY, null);
         }
 
         if(paused) {
-            canvas.drawBitmap(Data.Assets.pausedMemo, x, y, null);
+            canvas.drawBitmap(Data.Assets.pausedMemo, Data.Calculations.readyX, Data.Calculations.readyY, null);
         }
 
 
         return canvas;
+    }
+
+    private String getStringAsText() {
+        builder.setLength(0);
+        builder.append(Data.Constants.score).append(Data.score);
+        return builder.toString();
     }
 
     private boolean collideWithSpikes() {
@@ -89,9 +98,9 @@ public class GameActivity extends AbstractActivity implements Runnable {
 
     private boolean collision() {
         for(Shark shar : sharks) {
-            int fishx = fish.x;
-            int fishy = fish.y;
-            if ((fishx - shar.x >= -25 && fishx-shar.x <= 25)  && (fishy - shar.y <= 30 && fish.y - shar.y >= -10)) {
+            int fishx = fish.x+fish.image.getWidth();
+            int fishy = fish.y+fish.image.getHeight();
+            if ((fishx) - shar.x >= 0 && fishx-shar.x <= 50 && (fishy - shar.y >= 30 && fish.y - shar.y <= 50)) {
                 return true;
             }
         }
@@ -106,7 +115,6 @@ public class GameActivity extends AbstractActivity implements Runnable {
     @Override
     protected void onResume() {
         super.onResume();
-        this.pop = this.pool.load(Data.Assets.pop , 1);
         running = true;
         this.gameStarted = false;
         if(thread.getState().equals(Thread.State.NEW)) {
@@ -117,7 +125,6 @@ public class GameActivity extends AbstractActivity implements Runnable {
     @Override
     protected void onPause() {
         super.onPause();
-        this.pool.unload(pop);
         running = false;
         if(isFinishing()) {
             Intent intent = new Intent(getApplicationContext(), HomePageActivity.class);
@@ -135,7 +142,7 @@ public class GameActivity extends AbstractActivity implements Runnable {
                     paused = true;
                     return false;
                 }
-                pool.play(pop,1.0f, 1.0f, 0, 0, 1);
+                Data.controller.play(Data.controller.pop);
                 fish.move(true);
             } else {
                 paused = false;

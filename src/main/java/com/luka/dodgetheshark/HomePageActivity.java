@@ -16,8 +16,6 @@ public class HomePageActivity extends AbstractActivity {
 
     private Button play;
     private Button scores;
-    private int x;
-    private int y;
 
 
     @Override
@@ -28,15 +26,14 @@ public class HomePageActivity extends AbstractActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        x = width/2 - Data.Assets.header.getWidth()/2;
-        y = height/3 - Data.Assets.header.getHeight()/3;
-        play = new Button(x, (height/3)*2, Data.Assets.play);
-        scores = new Button((x+Data.Assets.header.getWidth()-Data.Assets.scores.getWidth()),(height/3)*2, Data.Assets.scores);
+
+        play = new Button(Data.Calculations.headerX, (height/3)*2, Data.Assets.play);
+        scores = new Button((Data.Calculations.headerX+Data.Assets.header.getWidth()-Data.Assets.scores.getWidth()),(height/3)*2, Data.Assets.scores);
     }
 
     @Override
     public Canvas draw(Canvas canvas) {
-        canvas.drawBitmap(Data.Assets.header,x,y ,null);
+        canvas.drawBitmap(Data.Assets.header,Data.Calculations.headerX,Data.Calculations.headerY ,null);
         canvas = play.draw(canvas);
         canvas = scores.draw(canvas);
         return canvas;
